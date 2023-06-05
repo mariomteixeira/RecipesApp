@@ -3,6 +3,9 @@ import React, { useState, useMemo, useCallback } from 'react';
 import RecipesContext from './RecipesContext';
 
 export default function RecipesProvider({ children }) {
+
+  const [email, setEmail] = useState('');
+  const [passwordLength, setPasswordLength] = useState(0)
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [searchType, setSearchType] = useState('');
@@ -36,6 +39,10 @@ export default function RecipesProvider({ children }) {
   }, [searchType, searchString]);
 
   const store = useMemo(() => ({
+    email,
+    setEmail,
+    passwordLength,
+    setPasswordLength,
     username,
     setUsername,
     password,
@@ -46,7 +53,7 @@ export default function RecipesProvider({ children }) {
     setSearchString,
     searchResults,
     executeSearch,
-  }), [username, password, searchType, searchString, searchResults, executeSearch]);
+  }), [username, password, searchType, searchString, searchResults, executeSearch,email, passwordLength]);
 
   return (
     <RecipesContext.Provider value={ store }>
