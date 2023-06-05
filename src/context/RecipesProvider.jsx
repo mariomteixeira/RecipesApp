@@ -10,7 +10,7 @@ export default function RecipesProvider({ children }) {
     setUsername,
     password,
     setPassword,
-  }), []);
+  }), [username, password, setUsername, setPassword]);
   return (
     <RecipesContext.Provider value={ store }>
       {children}

@@ -1,0 +1,21 @@
+footer {
+  align-items: center;
+  background-color: #ccc;
+  color: #464646;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+}
+
+p {
+  position: fixed;
+}
+
+.footer-icons {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
