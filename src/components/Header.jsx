@@ -24,6 +24,8 @@ export default function Header() {
     '/done-recipes': 'Done Recipes',
     '/profile': 'Profile',
     '/favorite-recipes': 'Favorite Recipes',
+    '/meals': 'Meals',
+    '/drinks': 'Drinks',
   };
 
   return (
