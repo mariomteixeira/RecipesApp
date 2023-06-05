@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipesContext from '../context/RecipesContext';
+import '../App.css';
 
 export default function Login() {
   const history = useHistory();
