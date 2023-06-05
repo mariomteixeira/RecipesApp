@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { RecipesContext } from '../context/RecipesContext';
+import RecipesContext from '../context/RecipesContext';
 
 function SearchBar() {
   const { setSearchType, setSearchString, executeSearch } = useContext(RecipesContext);
