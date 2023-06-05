@@ -18,39 +18,42 @@ function SearchBar() {
   };
 
   return (
-    <>
-      <input
-        className="search-bar"
-        data-testid="ingredient-search-radio"
-        type="radio"
-        value="ingredient"
-        onChange={ handleRadioChange }
-      >
+    <form>
+      <label htmlFor="ingredient-search-radio">
+        <input
+          id="ingredient-search-radio"
+          className="search-bar"
+          data-testid="ingredient-search-radio"
+          type="radio"
+          value="ingredient"
+          onChange={ handleRadioChange }
+        />
         Ingrediente
-      </input>
-      <label htmlFor="ingredient-search-radio">Ingredient</label>
+      </label>
 
-      <input
-        className="search-bar"
-        data-testid="name-search-radio"
-        type="radio"
-        value="name"
-        onChange={ handleRadioChange }
-      >
+      <label htmlFor="name-search-radio">
+        <input
+          id="name-search-radio"
+          className="search-bar"
+          data-testid="name-search-radio"
+          type="radio"
+          value="name"
+          onChange={ handleRadioChange }
+        />
         Name
-      </input>
-      <label htmlFor="name-search-radio">Name</label>
+      </label>
 
-      <input
-        className="search-bar"
-        data-testid="first-letter-search-radio"
-        type="radio"
-        value="first-letter"
-        onChange={ handleRadioChange }
-      >
+      <label htmlFor="first-letter-search-radio">
+        <input
+          id="first-letter-search-radio"
+          className="search-bar"
+          data-testid="first-letter-search-radio"
+          type="radio"
+          value="first-letter"
+          onChange={ handleRadioChange }
+        />
         First Letter
-      </input>
-      <label htmlFor="first-letter-search-radio">First Letter</label>
+      </label>
 
       <input
         type="text"
@@ -58,14 +61,14 @@ function SearchBar() {
         placeholder="Buscar Receita"
       />
 
-      <input
+      <button
         className="search-bar"
         data-testid="exec-search-btn"
         onClick={ handleSearchClick }
       >
         Executar
-      </input>
-    </>
+      </button>
+    </form>
   );
 }
 
