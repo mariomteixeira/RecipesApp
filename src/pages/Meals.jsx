@@ -1,7 +1,11 @@
 import Header from '../components/Header';
+import Recipes from '../components/Recipes';
 
 export default function Meals() {
   return (
-    <Header />
+    <div>
+      <Header />
+      <Recipes />
+    </div>
   );
 }

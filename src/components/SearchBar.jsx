@@ -1,8 +1,15 @@
 import { useContext } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipesContext from '../context/RecipesContext';
 
 function SearchBar() {
-  const { setSearchType, setSearchString, executeSearch } = useContext(RecipesContext);
+  const {
+    setSearchType,
+    setSearchString,
+    executeSearch,
+  } = useContext(RecipesContext);
+
+  const history = useHistory();
 
   const handleRadioChange = ({ target }) => {
     setSearchType(target.value);
@@ -12,9 +19,21 @@ function SearchBar() {
     setSearchString(target.value);
   };
 
-  const handleSearchClick = (event) => {
+  const handleSearchClick = async (event) => {
     event.preventDefault();
-    executeSearch();
+    const results = await executeSearch();
+    const currentPath = history.location.pathname;
+    if (!results) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+    if (results?.length === 1) {
+      if (currentPath.includes('/meals')) {
+        history.push(`/meals/${results[0].idMeal}`);
+      }
+      if (currentPath.includes('/drinks')) {
+        history.push(`/drinks/${results[0].idDrink}`);
+      }
+    }
   };
 
   return (
@@ -24,6 +43,7 @@ function SearchBar() {
           id="ingredient-search-radio"
           className="search-bar"
           data-testid="ingredient-search-radio"
+          name="radio-btn"
           type="radio"
           value="ingredient"
           onChange={ handleRadioChange }
@@ -34,6 +54,7 @@ function SearchBar() {
       <label htmlFor="name-search-radio">
         <input
           id="name-search-radio"
+          name="radio-btn"
           className="search-bar"
           data-testid="name-search-radio"
           type="radio"
@@ -46,6 +67,7 @@ function SearchBar() {
       <label htmlFor="first-letter-search-radio">
         <input
           id="first-letter-search-radio"
+          name="radio-btn"
           className="search-bar"
           data-testid="first-letter-search-radio"
           type="radio"
@@ -56,6 +78,7 @@ function SearchBar() {
       </label>
 
       <input
+        data-testid="search-input"
         type="text"
         onChange={ handleSearchChange }
         placeholder="Buscar Receita"

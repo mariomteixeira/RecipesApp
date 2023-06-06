@@ -2,6 +2,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useState } from 'react';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 export default function Header() {
   const history = useHistory();
@@ -30,15 +31,25 @@ export default function Header() {
 
   return (
     <div>
-      <button data-testid="profile-top-btn" onClick={ () => profileClick() }>
+      <button
+        src={ profileIcon }
+        data-testid="profile-top-btn"
+        onClick={ () => profileClick() }
+      >
         <img src={ profileIcon } alt="Ícone de perfil" />
       </button>
       {lSearch && (
-        <button data-testid="search-top-btn" onClick={ () => searchClick() }>
+        <button
+          src={ searchIcon }
+          data-testid="search-top-btn"
+          onClick={ () => searchClick() }
+        >
           <img src={ searchIcon } alt="Ícone de pesquisa" />
         </button>)}
-      {clickedBar && <input data-testid="search-input" />}
-      {routeName[locPath]}
+      {clickedBar && <SearchBar />}
+      <p data-testid="page-title">
+        {routeName[locPath]}
+      </p>
     </div>
   );
 }
