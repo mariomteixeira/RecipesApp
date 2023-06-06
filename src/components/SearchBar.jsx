@@ -8,7 +8,6 @@ function SearchBar() {
     setSearchString,
     executeSearch,
     searchResults,
-    isSearching,
   } = useContext(RecipesContext);
 
   const history = useHistory();
@@ -23,17 +22,17 @@ function SearchBar() {
 
   const handleSearchClick = async (event) => {
     event.preventDefault();
-    await executeSearch();
+    const results = await executeSearch();
     const currentPath = history.location.pathname;
-    if (!isSearching && searchResults?.length === 0) {
+    if (!results) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
-    if (!isSearching && searchResults?.length === 1) {
+    if (results?.length === 1) {
       if (currentPath.includes('/meals')) {
-        history.push(`/meals/${searchResults[0].idMeal}`);
+        history.push(`/meals/${results[0].idMeal}`);
       }
       if (currentPath.includes('/drinks')) {
-        history.push(`/drinks/${searchResults[0].idDrink}`);
+        history.push(`/drinks/${results[0].idDrink}`);
       }
     }
   };

@@ -11,7 +11,6 @@ export default function RecipesProvider({ children }) {
   const [searchType, setSearchType] = useState('');
   const [searchString, setSearchString] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
 
   const history = useHistory();
   /* useEffect(() => {
@@ -43,18 +42,16 @@ export default function RecipesProvider({ children }) {
       }
       url = `${BASE_URL}search.php?f=${searchString}`;
     }
-    setIsSearching(true);
     try {
       const response = await fetch(url);
       if (!response.ok) throw new Error(`HTTP error ${response.status}`);
       const data = await response.json();
-      setSearchResults(pathname === '/meals' ? data.meals : data.drinks);
+      const results = pathname === '/meals' ? data.meals : data.drinks;
+      setSearchResults(results);
       console.log(data.meals);
+      return results;
     } catch (error) {
       console.error('Failed to fetch:', error);
-    } finally {
-      setIsSearching(false);
-      console.log('chegou');
     }
   }, [searchType, searchString, history.location]);
 
@@ -73,7 +70,6 @@ export default function RecipesProvider({ children }) {
     setSearchString,
     searchResults,
     executeSearch,
-    isSearching,
   }), [username,
     password,
     searchType,
@@ -82,7 +78,6 @@ export default function RecipesProvider({ children }) {
     executeSearch,
     email,
     passwordLength,
-    isSearching,
   ]);
 
   return (
