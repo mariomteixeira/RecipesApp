@@ -31,7 +31,7 @@ describe('Testando o componente <Header.js />', () => {
       expect(history.location.pathname).toBe('/meals');
       expect(screen.getByTestId('profile-top-btn')).toBeInTheDocument();
       expect(screen.getByTestId('search-top-btn')).toBeInTheDocument();
-      expect(screen.getByText(/meals/i)).toBeInTheDocument();
+      expect(screen.getByTestId('page-title')).toBeInTheDocument();
       const searchBar = screen.getByTestId('search-top-btn');
       userEvent.click(searchBar);
       expect(screen.getByTestId('search-input')).toBeInTheDocument();
