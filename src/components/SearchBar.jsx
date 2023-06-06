@@ -7,7 +7,6 @@ function SearchBar() {
     setSearchType,
     setSearchString,
     executeSearch,
-    searchResults,
   } = useContext(RecipesContext);
 
   const history = useHistory();

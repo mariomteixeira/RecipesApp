@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback/* , useEffect */ } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipesContext from './RecipesContext';
 
