@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipesContext from '../context/RecipesContext';
 
@@ -8,9 +8,9 @@ function SearchBar() {
     setSearchString,
     executeSearch,
     searchResults,
+    isSearching,
   } = useContext(RecipesContext);
 
-  const [alert, setAlert] = useState(false);
   const history = useHistory();
 
   const handleRadioChange = ({ target }) => {
@@ -24,10 +24,17 @@ function SearchBar() {
   const handleSearchClick = async (event) => {
     event.preventDefault();
     await executeSearch();
-    setAlert(searchResults.length === 0);
-    if (searchResults.length === 1) {
-      const firstPath = history.location.pathname;
-      history.push(`/${firstPath}/${searchResults[0].idMeal}`);
+    const currentPath = history.location.pathname;
+    if (!isSearching && searchResults?.length === 0) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+    if (!isSearching && searchResults?.length === 1) {
+      if (currentPath.includes('/meals')) {
+        history.push(`/meals/${searchResults[0].idMeal}`);
+      }
+      if (currentPath.includes('/drinks')) {
+        history.push(`/drinks/${searchResults[0].idDrink}`);
+      }
     }
   };
 
@@ -86,13 +93,6 @@ function SearchBar() {
       >
         Executar
       </button>
-
-      {alert && (
-        <div>
-          <p>Sorry, we haven't found any recipes for these filters.</p>
-        </div>
-      )}
-
     </form>
   );
 }

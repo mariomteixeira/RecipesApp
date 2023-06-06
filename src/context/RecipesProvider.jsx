@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipesContext from './RecipesContext';
 
@@ -11,8 +11,17 @@ export default function RecipesProvider({ children }) {
   const [searchType, setSearchType] = useState('');
   const [searchString, setSearchString] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
 
   const history = useHistory();
+  /* useEffect(() => {
+    let BASE_URL = '';
+    BASE_URL = pathname === '/meals' ? 'https://www.themealdb.com/api/json/v1/1/search.php?s=' : 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+    fetch(BASE_URL)
+      .then((response) => response.json())
+      .then((data) => setSearchRe)
+    }
+  }, []); */
   const executeSearch = useCallback(async () => {
     let BASE_URL = '';
     const { pathname } = history.location;
@@ -34,14 +43,18 @@ export default function RecipesProvider({ children }) {
       }
       url = `${BASE_URL}search.php?f=${searchString}`;
     }
-
+    setIsSearching(true);
     try {
       const response = await fetch(url);
       if (!response.ok) throw new Error(`HTTP error ${response.status}`);
       const data = await response.json();
       setSearchResults(pathname === '/meals' ? data.meals : data.drinks);
+      console.log(data.meals);
     } catch (error) {
       console.error('Failed to fetch:', error);
+    } finally {
+      setIsSearching(false);
+      console.log('chegou');
     }
   }, [searchType, searchString, history.location]);
 
@@ -60,6 +73,7 @@ export default function RecipesProvider({ children }) {
     setSearchString,
     searchResults,
     executeSearch,
+    isSearching,
   }), [username,
     password,
     searchType,
@@ -68,6 +82,7 @@ export default function RecipesProvider({ children }) {
     executeSearch,
     email,
     passwordLength,
+    isSearching,
   ]);
 
   return (

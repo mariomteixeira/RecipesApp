@@ -10,13 +10,14 @@ export default function Recipes() {
   const { pathname } = useLocation();
   return (
     <div className="recipe-list">
-      {searchResults.length > 0 && searchResults.map((recipe) => (
+      {searchResults.length > 0 && searchResults.map((recipe, index) => (
         <Link
           key={ pathname === '/meals' ? recipe.idMeal : recipe.idDrink }
           to={ pathname === '/meals'
             ? `/meals/${recipe.idMeal}` : `/drinks/${recipe.idDrink}` }
         >
           <RecipeCard
+            index={ index }
             id={ pathname === '/meals' ? recipe.idMeal : recipe.idDrink }
             name={ pathname === '/meals' ? recipe.strMeal : recipe.strDrink }
             thumb={ pathname === '/meals' ? recipe.strMealThumb : recipe.strDrinkThumb }

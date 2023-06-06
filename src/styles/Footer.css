@@ -11,6 +11,6 @@ footer {
 }
 
 .footer-icons {
-  direction: column;
   display: flex;
+  flex-direction: column;
 }
