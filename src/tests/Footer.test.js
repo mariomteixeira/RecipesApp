@@ -1,20 +1,21 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
+import renderWithRouter from '../helpers/renderWithRouter';
 
 describe('Testando o componente <Footer.js />', () => {
   it('Teste se o componente contém o texto "Footer"', () => {
-    render(<App />);
+    renderWithRouter(<App />);
     const footer = screen.getByText(/Footer/i);
     expect(footer).toBeInTheDocument();
   });
   it('Testa se o componente possui 2 imagens', () => {
-    render(<App />);
+    renderWithRouter(<App />);
     const images = screen.getAllByRole('img');
     expect(images.length).toBe(2);
   });
   it('Testa se ao clicar nas duas imagens é feito o redirecionamento correto', () => {
-    render(<App />);
+    renderWithRouter(<App />);
     const images = screen.getAllByRole('img');
     userEvent.click(images[0]);
     expect(window.location.href).toBe('http://localhost/');
