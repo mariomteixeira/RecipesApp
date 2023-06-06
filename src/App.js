@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipesProvider from './context/RecipesProvider';
+import RecipeDetails from './components/RecipeDetails';
 import Login from './pages/Login';
 import Footer from './components/Footer';
 import Meals from './pages/Meals';
@@ -19,6 +20,8 @@ function App() {
           <Route exact path="/" component={ Login } />
           <Route exact path="/meals" component={ Meals } />
           <Route exact path="/drinks" component={ Drinks } />
+          <Route exact path="/meals/:id" component={ RecipeDetails } />
+          <Route exact path="/drinks/:id" component={ RecipeDetails } />
           <Route exact path="/profile" component={ Profile } />
           <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
           <Route exact path="/done-recipes" component={ DoneRecipes } />

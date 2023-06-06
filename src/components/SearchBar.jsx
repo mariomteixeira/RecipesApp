@@ -1,8 +1,17 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipesContext from '../context/RecipesContext';
 
 function SearchBar() {
-  const { setSearchType, setSearchString, executeSearch } = useContext(RecipesContext);
+  const {
+    setSearchType,
+    setSearchString,
+    executeSearch,
+    searchResults,
+  } = useContext(RecipesContext);
+
+  const [alert, setAlert] = useState(false);
+  const history = useHistory();
 
   const handleRadioChange = ({ target }) => {
     setSearchType(target.value);
@@ -12,9 +21,14 @@ function SearchBar() {
     setSearchString(target.value);
   };
 
-  const handleSearchClick = (event) => {
+  const handleSearchClick = async (event) => {
     event.preventDefault();
-    executeSearch();
+    await executeSearch();
+    setAlert(searchResults.length === 0);
+    if (searchResults.length === 1) {
+      const firstPath = history.location.pathname;
+      history.push(`/${firstPath}/${searchResults[0].idMeal}`);
+    }
   };
 
   return (
@@ -72,6 +86,13 @@ function SearchBar() {
       >
         Executar
       </button>
+
+      {alert && (
+        <div>
+          <p>Sorry, we haven't found any recipes for these filters.</p>
+        </div>
+      )}
+
     </form>
   );
 }
