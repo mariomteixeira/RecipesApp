@@ -56,6 +56,7 @@ function SearchBar() {
       </label>
 
       <input
+        data-testid="search-input"
         type="text"
         onChange={ handleSearchChange }
         placeholder="Buscar Receita"

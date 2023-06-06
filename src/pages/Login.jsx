@@ -13,7 +13,7 @@ export default function Login() {
   } = useContext(RecipesContext);
   const enableBtn = () => {
     const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
-    return emailRegex.test(email) && passwordLength.length > Number('6');
+    return emailRegex.test(email) && passwordLength > Number('6');
   };
   const handleClick = () => {
     localStorage.setItem('user', JSON.stringify({ email }));
@@ -34,7 +34,7 @@ export default function Login() {
           data-testid="password-input"
           id=""
           name=""
-          onChange={ ((event) => setPasswordLength(event.target.value)) }
+          onChange={ ((event) => setPasswordLength(event.target.value.length)) }
           placeholder="Password"
           type="password"
         />
