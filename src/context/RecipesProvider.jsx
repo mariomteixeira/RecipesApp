@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState, useMemo, useCallback } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipesContext from './RecipesContext';
 
 export default function RecipesProvider({ children }) {
@@ -11,31 +12,38 @@ export default function RecipesProvider({ children }) {
   const [searchString, setSearchString] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
+  const history = useHistory();
   const executeSearch = useCallback(async () => {
+    let BASE_URL = '';
+    const { pathname } = history.location;
+    if (pathname === '/meals') {
+      BASE_URL = 'https://www.themealdb.com/api/json/v1/1/';
+    } else {
+      BASE_URL = 'https://www.thecocktaildb.com/api/json/v1/1/';
+    }
     if (searchString.length === 0) return;
-
     let url = '';
     if (searchType === 'ingredient') {
-      url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchString}`;
+      url = `${BASE_URL}filter.php?i=${searchString}`;
     } else if (searchType === 'name') {
-      url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchString}`;
+      url = `${BASE_URL}search.php?s=${searchString}`;
     } else if (searchType === 'first-letter') {
       if (searchString.length !== 1) {
         global.alert('Your search must have only 1 (one) character');
         return;
       }
-      url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${searchString}`;
+      url = `${BASE_URL}search.php?f=${searchString}`;
     }
 
     try {
       const response = await fetch(url);
       if (!response.ok) throw new Error(`HTTP error ${response.status}`);
       const data = await response.json();
-      setSearchResults(data.meals);
+      setSearchResults(pathname === '/meals' ? data.meals : data.drinks);
     } catch (error) {
       console.error('Failed to fetch:', error);
     }
-  }, [searchType, searchString]);
+  }, [searchType, searchString, history.location]);
 
   const store = useMemo(() => ({
     email,
