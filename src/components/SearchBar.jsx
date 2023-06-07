@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipesContext from '../context/RecipesContext';
+import HandleSearchClick from './HandleSearchClick';
 
 function SearchBar() {
   const {
@@ -17,23 +18,6 @@ function SearchBar() {
 
   const handleSearchChange = ({ target }) => {
     setSearchString(target.value);
-  };
-
-  const handleSearchClick = async (event) => {
-    event.preventDefault();
-    const results = await executeSearch();
-    const currentPath = history.location.pathname;
-    if (!results) {
-      global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    }
-    if (results?.length === 1) {
-      if (currentPath.includes('/meals')) {
-        history.push(`/meals/${results[0].idMeal}`);
-      }
-      if (currentPath.includes('/drinks')) {
-        history.push(`/drinks/${results[0].idDrink}`);
-      }
-    }
   };
 
   return (
@@ -87,7 +71,8 @@ function SearchBar() {
       <button
         className="search-bar"
         data-testid="exec-search-btn"
-        onClick={ handleSearchClick }
+        onClick={ () => HandleSearchClick(executeSearch, history) }
+        type="button"
       >
         Executar
       </button>
