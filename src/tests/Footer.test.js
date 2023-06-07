@@ -6,7 +6,7 @@ import renderWithRouter from '../helpers/renderWithRouter';
 describe('Testando o componente <Footer.js />', () => {
   it('Teste se o componente contém o texto "Footer"', () => {
     renderWithRouter(<App />);
-    const footer = screen.getByText(/Footer/i);
+    const footer = screen.getByText(/drinks/i);
     expect(footer).toBeInTheDocument();
   });
   it('Testa se o componente possui 2 imagens', () => {
