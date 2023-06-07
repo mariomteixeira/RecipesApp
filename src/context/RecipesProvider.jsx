@@ -13,14 +13,6 @@ export default function RecipesProvider({ children }) {
   const [searchResults, setSearchResults] = useState([]);
 
   const history = useHistory();
-  /* useEffect(() => {
-    let BASE_URL = '';
-    BASE_URL = pathname === '/meals' ? 'https://www.themealdb.com/api/json/v1/1/search.php?s=' : 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-    fetch(BASE_URL)
-      .then((response) => response.json())
-      .then((data) => setSearchRe)
-    }
-  }, []); */
   const executeSearch = useCallback(async () => {
     let BASE_URL = '';
     const { pathname } = history.location;
@@ -69,6 +61,7 @@ export default function RecipesProvider({ children }) {
     searchString,
     setSearchString,
     searchResults,
+    setSearchResults,
     executeSearch,
   }), [username,
     password,

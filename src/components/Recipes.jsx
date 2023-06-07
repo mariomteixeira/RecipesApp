@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import { Link } from 'react-router-dom';
 import RecipeCard from './RecipeCard';
@@ -6,8 +6,15 @@ import RecipesContext from '../context/RecipesContext';
 import '../styles/Recipes.css';
 
 export default function Recipes() {
-  const { searchResults } = useContext(RecipesContext);
+  const { setSearchResults, searchResults } = useContext(RecipesContext);
   const { pathname } = useLocation();
+  useEffect(() => {
+    let BASE_URL = '';
+    BASE_URL = pathname === '/meals' ? 'https://www.themealdb.com/api/json/v1/1/search.php?s=' : 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+    fetch(BASE_URL)
+      .then((response) => response.json())
+      .then((data) => setSearchResults(pathname === '/meals' ? data.meals : data.drinks));
+  }, []);
   return (
     <div className="recipe-list">
       {searchResults?.length > 0 && searchResults.map((recipe, index) => (
