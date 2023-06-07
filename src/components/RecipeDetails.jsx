@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import '../styles/RecipeDetails.css';
 
 export default function RecipeDetails(props) {
   const [currentRecipe, setCurrentRecipe] = useState(null);
@@ -59,6 +60,13 @@ export default function RecipeDetails(props) {
             </li>
           ))}
         </ul>
+        <button
+          className="start-recipe-btn"
+          data-testid="start-recipe-btn"
+          type="button"
+        >
+          Start
+        </button>
       </div>
     ) : (
       <div>
@@ -96,6 +104,13 @@ export default function RecipeDetails(props) {
           allowFullScreen
           data-testid="video"
         />
+        <button
+          className="start-recipe-btn"
+          data-testid="start-recipe-btn"
+          type="button"
+        >
+          Start
+        </button>
       </div>
     )
   );
