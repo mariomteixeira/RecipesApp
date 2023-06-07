@@ -2,13 +2,12 @@ import { useHistory } from 'react-router-dom';
 import React from 'react';
 import Header from '../components/Header';
 
-localStorage.setItem('user', '{"email":"email@mail.com"}');
-localStorage.setItem('doneRecipes', '[]');
-localStorage.setItem('favoriteRecipes', '[]');
-localStorage.setItem('inProgressRecipes', '{}');
-
 export default function Profile() {
   const history = useHistory();
+  localStorage.setItem('user', JSON.stringify({ email: 'email@mail.com' }));
+  localStorage.setItem('doneRecipes', '[]');
+  localStorage.setItem('favoriteRecipes', '[]');
+  localStorage.setItem('inProgressRecipes', '{}');
   const username = JSON.parse(localStorage.getItem('user'));
   return (
     <div>
