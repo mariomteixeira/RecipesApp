@@ -22,6 +22,7 @@ export default function Recipes() {
           key={ pathname === '/meals' ? recipe.idMeal : recipe.idDrink }
           to={ pathname === '/meals'
             ? `/meals/${recipe.idMeal}` : `/drinks/${recipe.idDrink}` }
+          name={ pathname === '/meals' ? recipe.strMeal : recipe.strDrink }
         >
           <RecipeCard
             index={ index }

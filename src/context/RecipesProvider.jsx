@@ -40,7 +40,6 @@ export default function RecipesProvider({ children }) {
       const data = await response.json();
       const results = pathname === '/meals' ? data.meals : data.drinks;
       setSearchResults(results);
-      console.log(data.meals);
       return results;
     } catch (error) {
       console.error('Failed to fetch:', error);
