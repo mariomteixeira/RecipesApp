@@ -7,4 +7,5 @@
   border: 1px solid black;
   overflow: auto;
   white-space: nowrap;
+  width: 100vh;
 }

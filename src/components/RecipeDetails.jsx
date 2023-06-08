@@ -125,6 +125,8 @@ export default function RecipeDetails(props) {
             name={ pathname.includes('meal')
               ? recommendedRecipe.strDrink : recommendedRecipe.strMeal }
             index={ index }
+            src={ pathname.includes('meal')
+              ? recommendedRecipe?.strDrinkThumb : recommendedRecipe?.strMealThumb }
           />
         ))}
       </div>
