@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
+import '../styles/RecommendedRecipes.css';
 
-export default function RecommendedRecipes({ recommendedRecipes }) {
-  console.log(recommendedRecipes);
+export default function RecommendedRecipes({ name, index }) {
   return (
-    <p>Recommended</p>
+    <div className="recommended-recipe" data-testid={ `${index}-recommendation-card` }>
+      <p data-testid={ `${index}-recommendation-title` }>{ name }</p>
+    </div>
   );
 }
 

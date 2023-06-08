@@ -2,3 +2,9 @@
   bottom: 0;
   position: fixed;
 }
+
+.recommended-recipes {
+  border: 1px solid black;
+  overflow: auto;
+  white-space: nowrap;
+}

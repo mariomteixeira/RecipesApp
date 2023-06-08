@@ -35,7 +35,8 @@ export default function RecipeDetails(props) {
     const BASE_URL = pathname.includes('/meals') ? 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' : 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     fetch(BASE_URL)
       .then((response) => response.json())
-      .then((data) => setRecommendedRecipes(data));
+      .then((data) => setRecommendedRecipes(pathname
+        .includes('/meals') ? data.drinks.slice(0, '6') : data.meals.slice(0, '6')));
   };
 
   useEffect(() => {
@@ -116,7 +117,17 @@ export default function RecipeDetails(props) {
       >
         Start Recipe
       </button>
-      <RecommendedRecipes recommendedRecipes={ recommendedRecipes } />
+      <div className="recommended-recipes">
+        {recommendedRecipes?.map((recommendedRecipe, index) => (
+          <RecommendedRecipes
+            key={ index }
+            /* recommendedRecipe={ recommendedRecipe } */
+            name={ pathname.includes('meal')
+              ? recommendedRecipe.strDrink : recommendedRecipe.strMeal }
+            index={ index }
+          />
+        ))}
+      </div>
     </>
   );
 }
