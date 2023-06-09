@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { useLocation, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import '../styles/RecipeDetails.css';
 import RecommendedRecipes from './RecommendedRecipes';
 
 export default function RecipeDetails(props) {
+  const history = useHistory();
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [currentIngredients, setCurrentIngredients] = useState(null);
   const [currentAmounts, setCurrentAmounts] = useState(null);
@@ -37,6 +38,9 @@ export default function RecipeDetails(props) {
       .then((response) => response.json())
       .then((data) => setRecommendedRecipes(pathname
         .includes('/meals') ? data.drinks.slice(0, '6') : data.meals.slice(0, '6')));
+  };
+  const handleClick = () => {
+    history.push(`${pathname}/in-progress`);
   };
 
   useEffect(() => {
@@ -113,6 +117,7 @@ export default function RecipeDetails(props) {
       <button
         className="start-recipe-btn"
         data-testid="start-recipe-btn"
+        onClick={ () => handleClick() }
         type="button"
       >
         Start Recipe
