@@ -7,7 +7,7 @@ import RecommendedRecipes from './RecommendedRecipes';
 import RecipesContext from '../context/RecipesContext';
 
 export default function RecipeDetails(props) {
-  const { currentRecipeDetails, setCurrentRecipeDetails } = useContext(RecipesContext);
+  const { setCurrentRecipeDetails } = useContext(RecipesContext);
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [currentIngredients, setCurrentIngredients] = useState(null);
   const [currentAmounts, setCurrentAmounts] = useState(null);
