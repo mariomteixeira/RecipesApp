@@ -43,7 +43,7 @@ export default function RecipeDetails(props) {
   };
   const handleClick = () => {
     setCurrentRecipeDetails({
-      ...currentRecipeDetails, currentIngredients, currentAmounts,
+      ...currentRecipe, currentIngredients, currentAmounts,
     });
   };
 

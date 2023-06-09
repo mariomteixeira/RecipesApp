@@ -2,15 +2,14 @@ import { useContext } from 'react';
 import RecipesContext from '../context/RecipesContext';
 
 export default function RecipeInProgress() {
-  const { currentRecipeDetails: {
-    alcoholic,
-    category,
-    instructions,
-    name,
-    src,
-    currentIngredients,
-    currentAmounts,
-  } } = useContext(RecipesContext);
+  const {
+    currentRecipeDetails, currentRecipeDetails: { currentIngredients, currentAmounts },
+  } = useContext(RecipesContext);
+  const name = currentRecipeDetails.strMeal || currentRecipeDetails.strDrink;
+  const src = currentRecipeDetails.strMealThumb || currentRecipeDetails.strDrinkThumb;
+  const { category } = currentRecipeDetails;
+  const alcoholic = currentRecipeDetails?.strAlcoholic;
+  const instructions = currentRecipeDetails.strInstructions;
   return (
     <div>
       <p>In Progress</p>
@@ -22,7 +21,6 @@ export default function RecipeInProgress() {
         {currentIngredients?.map((ingredient, index) => (
           <li
             key={ Math.random() }
-            /* data-testid={ `${index}-ingredient-name-and-measure` } */
           >
             {`${ingredient} ${currentAmounts[index]}`}
           </li>
