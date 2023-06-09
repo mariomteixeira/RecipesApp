@@ -7,6 +7,7 @@ import RecommendedRecipes from './RecommendedRecipes';
 export default function RecipeDetails(props) {
   const history = useHistory();
   const [currentRecipe, setCurrentRecipe] = useState(null);
+  const [currentRecipeDetails, setCurrentRecipeDetails] = useState({});
   const [currentIngredients, setCurrentIngredients] = useState(null);
   const [currentAmounts, setCurrentAmounts] = useState(null);
   const [recommendedRecipes, setRecommendedRecipes] = useState(null);
@@ -17,8 +18,26 @@ export default function RecipeDetails(props) {
     const BASE_URL = pathname.includes('/meals') ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}` : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
     fetch(BASE_URL)
       .then((response) => response.json())
-      .then((data) => setCurrentRecipe(pathname.includes('/meals')
-        ? data.meals[0] : data.drinks[0]));
+      .then((data) => {
+        setCurrentRecipe(pathname.includes('/meals') ? data.meals[0] : data.drinks[0]);
+        if (pathname.includes('/meals')) {
+          setCurrentRecipeDetails({
+            name: data.meals[0].strMeal,
+            category: data.meals[0].strCategory,
+            src: data.meals[0].strMealThumb,
+            instructions: data.meals[0].strInstructions,
+            link: data.meals[0].strYoutube,
+          });
+        } else {
+          setCurrentRecipeDetails({
+            name: data.drinks[0].strDrink,
+            category: data.drinks[0].strCategory,
+            src: data.drinks[0].strDrinkThumb,
+            instructions: data.drinks[0].strInstructions,
+            alcoholic: data.drinks[0].strAlcoholic,
+          });
+        }
+      });
   };
   const getIngredientsAndAmounts = () => {
     const ingredients = Object.values(Object.entries(currentRecipe)
@@ -54,38 +73,17 @@ export default function RecipeDetails(props) {
 
   return (
     <>
-      {currentRecipe && pathname.includes('/drinks') ? (
+      {currentRecipe && (
         <div>
-          <h1 data-testid="recipe-title">{currentRecipe?.strDrink}</h1>
-          <p data-testid="recipe-category">{currentRecipe?.strAlcoholic}</p>
+          <h1 data-testid="recipe-title">{currentRecipeDetails.name}</h1>
+          <p data-testid="recipe-category">{currentRecipeDetails.alcoholic}</p>
+          <p data-testid="recipe-category">{currentRecipeDetails.category}</p>
           <img
             data-testid="recipe-photo"
-            src={ currentRecipe?.strDrinkThumb }
-            alt={ currentRecipe.strDrink }
+            src={ currentRecipeDetails.src }
+            alt={ currentRecipeDetails.name }
           />
-          <p data-testid="instructions">{currentRecipe?.strInstructions}</p>
-          <p>{currentRecipe.strAlcoholic}</p>
-          <ul>
-            {currentIngredients?.map((ingredient, index) => (
-              <li
-                key={ Math.random() }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                {`${ingredient} ${currentAmounts[index]}`}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <div>
-          <h1 data-testid="recipe-title">{currentRecipe?.strMeal}</h1>
-          <p data-testid="recipe-category">{currentRecipe?.strCategory}</p>
-          <img
-            data-testid="recipe-photo"
-            src={ currentRecipe?.strMealThumb }
-            alt={ currentRecipe?.strMeal }
-          />
-          <p data-testid="instructions">{currentRecipe?.strInstructions}</p>
+          <p data-testid="instructions">{currentRecipeDetails.instructions}</p>
           <ul>
             {currentIngredients?.map((ingredient, index) => (
               <li
@@ -99,8 +97,8 @@ export default function RecipeDetails(props) {
           <iframe
             width="480"
             height="360"
-            src={ currentRecipe?.strYoutube.replace('watch?v=', 'embed/') }
-            title={ `${currentRecipe?.strMeal} video` }
+            src={ currentRecipeDetails.link?.replace('watch?v=', 'embed/') }
+            title={ `${currentRecipeDetails.name} video` }
             frameBorder="0"
             allow="accelerometer;
           autoplay;
@@ -126,7 +124,6 @@ export default function RecipeDetails(props) {
         {recommendedRecipes?.map((recommendedRecipe, index) => (
           <RecommendedRecipes
             key={ index }
-            /* recommendedRecipe={ recommendedRecipe } */
             name={ pathname.includes('meal')
               ? recommendedRecipe.strDrink : recommendedRecipe.strMeal }
             index={ index }
