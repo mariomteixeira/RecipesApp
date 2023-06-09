@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useState, useEffect, useContext } from 'react';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import '../styles/RecipeDetails.css';
+import { Link } from 'react-router-dom';
 import RecommendedRecipes from './RecommendedRecipes';
+import RecipesContext from '../context/RecipesContext';
 
 export default function RecipeDetails(props) {
-  const history = useHistory();
+  const { currentRecipeDetails, setCurrentRecipeDetails } = useContext(RecipesContext);
   const [currentRecipe, setCurrentRecipe] = useState(null);
-  const [currentRecipeDetails, setCurrentRecipeDetails] = useState({});
   const [currentIngredients, setCurrentIngredients] = useState(null);
   const [currentAmounts, setCurrentAmounts] = useState(null);
   const [recommendedRecipes, setRecommendedRecipes] = useState(null);
@@ -59,7 +60,9 @@ export default function RecipeDetails(props) {
         .includes('/meals') ? data.drinks.slice(0, '6') : data.meals.slice(0, '6')));
   };
   const handleClick = () => {
-    history.push(`${pathname}/in-progress`);
+    setCurrentRecipeDetails({
+      ...currentRecipeDetails, currentIngredients, currentAmounts,
+    });
   };
 
   useEffect(() => {
@@ -112,14 +115,18 @@ export default function RecipeDetails(props) {
           />
         </div>
       )}
-      <button
-        className="start-recipe-btn"
-        data-testid="start-recipe-btn"
-        onClick={ () => handleClick() }
-        type="button"
+      <Link
+        to={ `${pathname}/in-progress` }
       >
-        Start Recipe
-      </button>
+        <button
+          className="start-recipe-btn"
+          data-testid="start-recipe-btn"
+          onClick={ () => handleClick() }
+          type="button"
+        >
+          Start Recipe
+        </button>
+      </Link>
       <div className="recommended-recipes">
         {recommendedRecipes?.map((recommendedRecipe, index) => (
           <RecommendedRecipes
