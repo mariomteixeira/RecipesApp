@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import '../styles/RecipeInProgress.css';
 
 export default function RecipeInProgress(props) {
   const [currentRecipeInProgress, setCurrentRecipeInProgress] = useState(null);
@@ -57,8 +58,11 @@ export default function RecipeInProgress(props) {
               htmlFor=""
             >
               <li>
-                <input type="checkbox" name="" id="ing" />
-                {ingredient}
+                <input
+                  type="checkbox"
+                  onChange={ (event) => event.target.classList.add('crossed') }
+                />
+                <span>{ingredient}</span>
               </li>
             </label>
           ))}
