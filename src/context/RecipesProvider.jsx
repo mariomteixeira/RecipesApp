@@ -76,6 +76,7 @@ export default function RecipesProvider({ children }) {
     executeSearch,
     email,
     passwordLength,
+    recipes,
   ]);
 
   return (
