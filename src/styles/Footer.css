@@ -6,7 +6,7 @@ footer {
   display: flex;
   font-family: sans-serif;
   justify-content: space-evenly;
-  position: fixed;
+  position: sticky;
   width: 100%;
 }
 

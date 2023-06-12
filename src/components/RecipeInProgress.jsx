@@ -53,6 +53,7 @@ export default function RecipeInProgress(props) {
         <ul>
           {currentIngredientList?.map((ingredient, index) => (
             <label
+              className="renatogaucho"
               data-testid={ `${index}-ingredient-step` }
               key={ Math.random() }
               htmlFor=""

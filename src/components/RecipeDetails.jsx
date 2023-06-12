@@ -3,11 +3,14 @@ import { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import '../styles/RecipeDetails.css';
 import { Link } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import RecommendedRecipes from './RecommendedRecipes';
 import RecipesContext from '../context/RecipesContext';
+import shareIcon from '../images/shareIcon.svg';
 
 export default function RecipeDetails(props) {
   const { setCurrentRecipeDetails } = useContext(RecipesContext);
+  const [copied, setCopied] = useState(null);
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [currentIngredients, setCurrentIngredients] = useState(null);
   const [currentAmounts, setCurrentAmounts] = useState(null);
@@ -45,6 +48,21 @@ export default function RecipeDetails(props) {
     setCurrentRecipeDetails({
       ...currentRecipe, currentIngredients, currentAmounts,
     });
+  };
+  const favoriteRecipe = () => {
+    const obj = {
+      id: currentRecipe.idMeal || currentRecipe.idDrink,
+      type: currentRecipe.idMeal ? 'meal' : 'drink',
+      nationality: currentRecipe.strArea || '',
+      category: currentRecipe.strCategory || '',
+      alcoholicOrNot: currentRecipe.strAlcoholic || '',
+      name: currentRecipe.strMeal || currentRecipe.strDrink,
+      image: currentRecipe.idMeal
+        ? currentRecipe.strMealThumb : currentRecipe.strDrinkThumb,
+    };
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    console.log(favoriteRecipes);
+    localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteRecipes, obj]));
   };
 
   useEffect(() => {
@@ -143,8 +161,22 @@ export default function RecipeDetails(props) {
           />
         ))}
       </div>
-      <button data-testid="share-btn">Compartilhar</button>
-      <button data-testid="favorite-btn">Favoritar</button>
+      <button
+        data-testid="share-btn"
+        onClick={ () => {
+          setCopied('Link copied!');
+          copy(`http://localhost:3000${pathname}`);
+        } }
+      >
+        <img src={ shareIcon } alt="" />
+      </button>
+      <button
+        data-testid="favorite-btn"
+        onClick={ () => favoriteRecipe() }
+      >
+        Favoritar
+      </button>
+      <p>{copied}</p>
     </>
   );
 }
