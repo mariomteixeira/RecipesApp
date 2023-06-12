@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import RecipeCard from './RecipeCard';
 import RecipesContext from '../context/RecipesContext';
 import '../styles/Recipes.css';
+import Categories from './Categories';
 
 export default function Recipes() {
   const { setSearchResults, searchResults } = useContext(RecipesContext);
@@ -17,6 +18,7 @@ export default function Recipes() {
   }, []);
   return (
     <div className="recipe-list">
+      <Categories />
       {searchResults?.length > 0 && searchResults.map((recipe, index) => (
         <Link
           key={ pathname === '/meals' ? recipe.idMeal : recipe.idDrink }
