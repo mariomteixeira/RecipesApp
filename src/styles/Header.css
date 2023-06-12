@@ -1,1 +1,12 @@
 /* Foi culpa do Rayan */
+.page-title {
+  color: #41197f;
+  display: flex;
+  font-family: Epilogue , sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 900;
+  justify-content: center;
+  line-height: 20px;
+}
+

@@ -1,0 +1,16 @@
+.done-container {
+  flex: auto;
+}
+
+.btn-head {
+  display: flex;
+  flex-basis: auto;
+  justify-content: space-evenly;
+  min-height: 100px;
+}
+
+.btn-head > button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
