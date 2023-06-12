@@ -143,6 +143,8 @@ export default function RecipeDetails(props) {
           />
         ))}
       </div>
+      <button data-testid="share-btn">Compartilhar</button>
+      <button data-testid="favorite-btn">Favoritar</button>
     </>
   );
 }
