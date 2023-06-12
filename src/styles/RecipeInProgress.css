@@ -1,0 +1,3 @@
+.renatogaucho:has( input:checked ) {
+  text-decoration: line-through solid black;
+}

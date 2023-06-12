@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipesProvider from './context/RecipesProvider';
 import RecipeDetails from './components/RecipeDetails';
 import Login from './pages/Login';
-import Footer from './components/Footer';
 import Meals from './pages/Meals';
 import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
@@ -32,7 +31,6 @@ function App() {
         </div>
         {/* Passar as páginas e os outros componentes somente acima desta div */}
       </div>
-      <Footer />
     </RecipesProvider>
   );
 }
