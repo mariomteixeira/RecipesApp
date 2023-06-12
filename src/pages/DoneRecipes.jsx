@@ -6,6 +6,9 @@ import foods from '../images/foods.svg';
 import '../styles/DoneRecipes.css';
 
 export default function DoneRecipes() {
+  const index = 0;
+  const tagName = 'Pasta';
+  const tagName2 = 'Curry';
   return (
     <div className="done-container">
       <Header />
@@ -13,7 +16,7 @@ export default function DoneRecipes() {
         <button type="button" data-testid="filter-by-all-btn">
           <Image src={ All } alt="All" fluid />
         </button>
-        <button type="button" data-testid="filter-by-food-btn">
+        <button type="button" data-testid="filter-by-meal-btn">
           <Image src={ foods } alt="Foods" fluid />
         </button>
         <button type="button" data-testid="filter-by-drink-btn">
@@ -26,6 +29,7 @@ export default function DoneRecipes() {
       <text data-testid={ `${index}-horizontal-done-date` }>texto</text>
       <input data-testid={ `${index}-horizontal-share-btn` } />
       <h2 data-testid={ `${index}-${tagName}-horizontal-tag` }>tags</h2>
+      <h2 data-testid={ `${index}-${tagName2}-horizontal-tag` }>tags</h2>
     </div>
   );
 }

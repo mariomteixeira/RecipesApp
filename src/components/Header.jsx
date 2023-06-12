@@ -23,11 +23,11 @@ export default function Header() {
   };
 
   const routeName = {
-    '/done-recipes': 'DONE RECIPES',
-    '/profile': 'PROFILE',
-    '/favorite-recipes': 'FAVORITE RECIPES',
-    '/meals': 'MEALS',
-    '/drinks': 'DRINKS',
+    '/done-recipes': 'Done Recipes',
+    '/profile': 'Profile',
+    '/favorite-recipes': 'Favorite Recipes',
+    '/meals': 'Meals',
+    '/drinks': 'Drinks',
   };
 
   return (
