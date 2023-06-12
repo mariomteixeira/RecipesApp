@@ -12,6 +12,7 @@ export default function RecipesProvider({ children }) {
   const [searchString, setSearchString] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [currentRecipeDetails, setCurrentRecipeDetails] = useState({});
+  const [recipes, setRecipes] = useState([]);
 
   const history = useHistory();
   const executeSearch = useCallback(async () => {
@@ -65,6 +66,8 @@ export default function RecipesProvider({ children }) {
     executeSearch,
     currentRecipeDetails,
     setCurrentRecipeDetails,
+    recipes,
+    setRecipes,
   }), [username,
     password,
     searchType,
@@ -73,6 +76,7 @@ export default function RecipesProvider({ children }) {
     executeSearch,
     email,
     passwordLength,
+    recipes,
   ]);
 
   return (
