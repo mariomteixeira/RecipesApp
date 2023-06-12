@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import DoneRecipes from './pages/DoneRecipes';
 import RecipeInProgress from './components/RecipeInProgress';
+import './images/bandeja.svg';
 
 function App() {
   return (
