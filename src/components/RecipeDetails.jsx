@@ -7,9 +7,12 @@ import copy from 'clipboard-copy';
 import RecommendedRecipes from './RecommendedRecipes';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
+import whiteHeart from '../images/whiteHeartIcon.svg';
+import blackHeart from '../images/blackHeartIcon.svg';
 
 export default function RecipeDetails(props) {
   const { setCurrentRecipeDetails } = useContext(RecipesContext);
+  const [heartIcon, setHeartIcon] = useState(whiteHeart);
   const [copied, setCopied] = useState(null);
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [currentIngredients, setCurrentIngredients] = useState(null);
@@ -61,8 +64,10 @@ export default function RecipeDetails(props) {
         ? currentRecipe.strMealThumb : currentRecipe.strDrinkThumb,
     };
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    console.log(favoriteRecipes);
     localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteRecipes, obj]));
+    const favoritedRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    setHeartIcon(favoritedRecipes
+      .some((recipe) => (recipe.id === id)) ? blackHeart : whiteHeart);
   };
 
   useEffect(() => {
@@ -152,7 +157,6 @@ export default function RecipeDetails(props) {
         {recommendedRecipes?.map((recommendedRecipe, index) => (
           <RecommendedRecipes
             key={ index }
-            /* recommendedRecipe={ recommendedRecipe } */
             name={ pathname.includes('meal')
               ? recommendedRecipe.strDrink : recommendedRecipe.strMeal }
             index={ index }
@@ -174,7 +178,10 @@ export default function RecipeDetails(props) {
         data-testid="favorite-btn"
         onClick={ () => favoriteRecipe() }
       >
-        Favoritar
+        <img
+          src={ heartIcon }
+          alt=""
+        />
       </button>
       <p>{copied}</p>
     </>

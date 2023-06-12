@@ -1,6 +1,7 @@
 .start-recipe-btn {
   bottom: 0;
   position: fixed;
+  right: 0;
   z-index: 1;
 }
 
@@ -10,3 +11,4 @@
   white-space: nowrap;
   width: 100vh;
 }
+
