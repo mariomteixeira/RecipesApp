@@ -21,6 +21,7 @@ export default function RecipeDetails(props) {
   const { match: { params: { id } } } = props;
   const location = useLocation();
   const { pathname } = location;
+  let inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
   const fetchRecipe = () => {
     const BASE_URL = pathname.includes('/meals') ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}` : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
     fetch(BASE_URL)
@@ -51,6 +52,21 @@ export default function RecipeDetails(props) {
     setCurrentRecipeDetails({
       ...currentRecipe, currentIngredients, currentAmounts,
     });
+    const obj = {
+      id: currentRecipe.idMeal || currentRecipe.idDrink,
+      type: currentRecipe.idMeal ? 'meal' : 'drink',
+      nationality: currentRecipe.strArea || '',
+      category: currentRecipe.strCategory || '',
+      alcoholicOrNot: currentRecipe.strAlcoholic || '',
+      name: currentRecipe.strMeal || currentRecipe.strDrink,
+      image: currentRecipe.idMeal
+        ? currentRecipe.strMealThumb : currentRecipe.strDrinkThumb,
+      doneDate: new Date(),
+      /* tags: array-de-tags-da-receita-ou-array-vazio, */
+    };
+    inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    localStorage
+      .setItem('inProgressRecipes', JSON.stringify([...inProgressRecipes, obj]));
   };
   const favoriteRecipe = () => {
     const obj = {
@@ -153,7 +169,8 @@ export default function RecipeDetails(props) {
           onClick={ () => handleClick() }
           type="button"
         >
-          Start Recipe
+          {inProgressRecipes
+            .some((recipe) => recipe.id === id) ? 'Continue Recipe' : 'Start Recipe'}
         </button>
       </Link>
       <div className="recommended-recipes">

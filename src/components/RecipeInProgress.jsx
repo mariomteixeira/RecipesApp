@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link, useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import '../styles/RecipeInProgress.css';
 
 export default function RecipeInProgress(props) {
+  const history = useHistory();
+  const [finishedRecipe, setFinishedRecipe] = useState(false);
   const [currentRecipeInProgress, setCurrentRecipeInProgress] = useState(null);
   const [currentIngredientList, setCurrentIngredientList] = useState([]);
   const location = useLocation();
@@ -61,7 +63,9 @@ export default function RecipeInProgress(props) {
               <li>
                 <input
                   type="checkbox"
-                  onChange={ (event) => event.target.classList.add('crossed') }
+                  onChange={ (event) => {
+                    event.target.classList.add('crossed');
+                  } }
                 />
                 <span>{ingredient}</span>
               </li>
@@ -71,8 +75,20 @@ export default function RecipeInProgress(props) {
       )}
       <p data-testid="instructions">{ instructions }</p>
       <button data-testid="share-btn">Compartilhar</button>
-      <button data-testid="favorite-btn">Favoritar</button>
-      <button data-testid="finish-recipe-btn">Finalizar</button>
+      <button
+        onClick={ () => history.push('/done-recipes') }
+        data-testid="favorite-btn"
+      >
+        Favoritar
+      </button>
+      <Link to="/done-recipes">
+        <button
+          disabled={ finishedRecipe }
+          data-testid="finish-recipe-btn"
+        >
+          Finalizar
+        </button>
+      </Link>
     </div>
   );
 }
