@@ -71,7 +71,7 @@ export default function DoneRecipes() {
           <Image src={ drinks } id="drink" alt="Drinks" fluid />
         </button>
       </div>
-      {data.map((i, index) => (i.type === 'meal'
+      {data?.map((i, index) => (i.type === 'meal'
         ? (
           <div key={ i.id }>
             <Link to={ `/meals/${i.id}` }>
