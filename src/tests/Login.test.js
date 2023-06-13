@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import App from '../App';
-import renderWithRouter from '../helpers/renderWithRouter';
+import { renderWithRouter } from '../helpers/renderWithRouter';
 
 describe('Test a página de Login', () => {
   const testEmail = 'teste@teste.com';
