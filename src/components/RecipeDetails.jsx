@@ -21,7 +21,8 @@ export default function RecipeDetails(props) {
   const { match: { params: { id } } } = props;
   const location = useLocation();
   const { pathname } = location;
-  let inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+  let inProgressRecipes = localStorage.getItem('inProgressRecipes')
+    ? JSON.parse(localStorage.getItem('inProgressRecipes')) : [];
   const fetchRecipe = () => {
     const BASE_URL = pathname.includes('/meals') ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}` : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
     fetch(BASE_URL)
@@ -62,9 +63,10 @@ export default function RecipeDetails(props) {
       image: currentRecipe.idMeal
         ? currentRecipe.strMealThumb : currentRecipe.strDrinkThumb,
       doneDate: new Date(),
-      /* tags: array-de-tags-da-receita-ou-array-vazio, */
+      tags: currentRecipe.strTags || [],
     };
-    inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    inProgressRecipes = localStorage.getItem('inProgressRecipes')
+      ? JSON.parse(localStorage.getItem('inProgressRecipes')) : [];
     localStorage
       .setItem('inProgressRecipes', JSON.stringify([...inProgressRecipes, obj]));
   };
@@ -160,19 +162,6 @@ export default function RecipeDetails(props) {
           />
         </div>
       )}
-      <Link
-        to={ `${pathname}/in-progress` }
-      >
-        <button
-          className="start-recipe-btn"
-          data-testid="start-recipe-btn"
-          onClick={ () => handleClick() }
-          type="button"
-        >
-          {inProgressRecipes
-            .some((recipe) => recipe.id === id) ? 'Continue Recipe' : 'Start Recipe'}
-        </button>
-      </Link>
       <div className="recommended-recipes">
         {recommendedRecipes?.map((recommendedRecipe, index) => (
           <RecommendedRecipes
@@ -205,6 +194,19 @@ export default function RecipeDetails(props) {
         />
       </button>
       <p>{copied}</p>
+      <Link
+        to={ `${pathname}/in-progress` }
+      >
+        <button
+          className="start-recipe-btn"
+          data-testid="start-recipe-btn"
+          onClick={ () => handleClick() }
+          type="button"
+        >
+          {inProgressRecipes
+            .some((recipe) => recipe.id === id) ? 'Continue Recipe' : 'Start Recipe'}
+        </button>
+      </Link>
     </>
   );
 }

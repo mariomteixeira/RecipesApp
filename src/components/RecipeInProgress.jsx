@@ -8,9 +8,12 @@ export default function RecipeInProgress(props) {
   /* const [finishedRecipe, setFinishedRecipe] = useState(false); */
   const [currentRecipeInProgress, setCurrentRecipeInProgress] = useState(null);
   const [currentIngredientList, setCurrentIngredientList] = useState([]);
+  const [checkboxes, setCheckboxes] = useState({});
+  const [allChecked, setAllChecked] = useState(false);
   const location = useLocation();
   const { pathname } = location;
   const { match: { params: { id } } } = props;
+
   const fetchRecipe = () => {
     const BASE_URL = pathname.includes('/meals') ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}` : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
     fetch(BASE_URL)
@@ -20,15 +23,18 @@ export default function RecipeInProgress(props) {
           ? data.meals[0] : data.drinks[0]);
       });
   };
+
   const name = currentRecipeInProgress?.strMeal || currentRecipeInProgress?.strDrink;
   const src = currentRecipeInProgress?.strMealThumb
   || currentRecipeInProgress?.strDrinkThumb;
   const category = currentRecipeInProgress?.category;
   const alcoholic = currentRecipeInProgress?.strAlcoholic;
   const instructions = currentRecipeInProgress?.strInstructions;
+
   useEffect(() => {
     fetchRecipe();
   }, []);
+
   useEffect(() => {
     if (currentRecipeInProgress) {
       const ingredients = Object.values(Object.entries(currentRecipeInProgress)
@@ -44,6 +50,33 @@ export default function RecipeInProgress(props) {
       setCurrentIngredientList(ingredientList);
     }
   }, [currentRecipeInProgress]);
+
+  useEffect(() => {
+    if (currentRecipeInProgress) {
+      const ingredients = Object.values(Object.entries(currentRecipeInProgress))
+        .filter((entry) => entry[0].includes('Ingredient'))
+        .filter((ingredient) => ingredient[1] !== '' && ingredient[1] !== null)
+        .map((value) => value[1]);
+
+      const newCheckboxesState = {};
+      ingredients.forEach((ingredient, index) => {
+        newCheckboxesState[index] = false;
+      });
+      setCheckboxes(newCheckboxesState);
+    }
+  }, [currentRecipeInProgress]);
+
+  useEffect(() => {
+    setAllChecked(Object.values(checkboxes).every((isChecked) => isChecked));
+  }, [checkboxes]);
+
+  const handleCheckboxChange = (index) => {
+    setCheckboxes((prevCheckboxes) => ({
+      ...prevCheckboxes,
+      [index]: !prevCheckboxes[index],
+    }));
+  };
+
   return (
     <div>
       <p>In Progress</p>
@@ -57,14 +90,16 @@ export default function RecipeInProgress(props) {
             <label
               className="renatogaucho"
               data-testid={ `${index}-ingredient-step` }
-              key={ Math.random() }
+              key={ index }
               htmlFor=""
             >
               <li>
                 <input
                   type="checkbox"
+                  checked={ checkboxes[index] || false }
                   onChange={ (event) => {
                     event.target.classList.add('crossed');
+                    handleCheckboxChange(index);
                   } }
                 />
                 <span>{ingredient}</span>
@@ -83,7 +118,7 @@ export default function RecipeInProgress(props) {
       </button>
       <Link to="/done-recipes">
         <button
-          /* disabled={ finishedRecipe } */
+          disabled={ !allChecked }
           data-testid="finish-recipe-btn"
         >
           Finalizar
