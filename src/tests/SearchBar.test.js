@@ -9,6 +9,7 @@ describe('Testando o componente <SearchBar.js />', () => {
   window.alert = jest.fn();
   it('Verifica se o componente está sendo renderizado na tela', async () => {
     const { history } = renderWithRouter(<App />);
+    act(() => history.push('/'));
     const usernameField = screen.getByPlaceholderText('Username');
     const passwordField = screen.getByPlaceholderText('Password');
     const loginBtn = screen.getByRole('button', /entrar/i);

@@ -14,7 +14,7 @@ function withRouter(component, history) {
 export function renderWithRouter(
   component,
   {
-    initialEntries = ['/'],
+    initialEntries = ['/meals/51'],
     history = createMemoryHistory({ initialEntries }),
   } = {},
 ) {
