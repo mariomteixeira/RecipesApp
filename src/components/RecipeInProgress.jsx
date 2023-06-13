@@ -1,10 +1,15 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import '../styles/RecipeInProgress.css';
+import copy from 'clipboard-copy';
+import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 export default function RecipeInProgress(props) {
-  const history = useHistory();
+  const [heartIcon, setHeartIcon] = useState(whiteHeartIcon);
+  const [copied, setCopied] = useState(null);
   /* const [finishedRecipe, setFinishedRecipe] = useState(false); */
   const [currentRecipeInProgress, setCurrentRecipeInProgress] = useState(null);
   const [currentIngredientList, setCurrentIngredientList] = useState([]);
@@ -13,7 +18,6 @@ export default function RecipeInProgress(props) {
   const location = useLocation();
   const { pathname } = location;
   const { match: { params: { id } } } = props;
-
   const fetchRecipe = () => {
     const BASE_URL = pathname.includes('/meals') ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}` : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
     fetch(BASE_URL)
@@ -30,9 +34,34 @@ export default function RecipeInProgress(props) {
   const category = currentRecipeInProgress?.category;
   const alcoholic = currentRecipeInProgress?.strAlcoholic;
   const instructions = currentRecipeInProgress?.strInstructions;
-
+  const favoriteRecipe = () => {
+    const obj = {
+      id: currentRecipeInProgress.idMeal || currentRecipeInProgress.idDrink,
+      type: currentRecipeInProgress.idMeal ? 'meal' : 'drink',
+      nationality: currentRecipeInProgress.strArea || '',
+      category: currentRecipeInProgress.strCategory || '',
+      alcoholicOrNot: currentRecipeInProgress.strAlcoholic || '',
+      name: currentRecipeInProgress.strMeal || currentRecipeInProgress.strDrink,
+      image: currentRecipeInProgress.idMeal
+        ? currentRecipeInProgress.strMealThumb : currentRecipeInProgress.strDrinkThumb,
+    };
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const isFavorite = favoriteRecipes.some((recipe) => (recipe.id === id));
+    if (isFavorite) {
+      const newFavorites = favoriteRecipes.filter((recipe) => recipe.id !== id);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+    } else {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteRecipes, obj]));
+    }
+    const favoritedRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    setHeartIcon(favoritedRecipes
+      .some((recipe) => (recipe.id === id)) ? blackHeartIcon : whiteHeartIcon);
+  };
   useEffect(() => {
     fetchRecipe();
+    const favoritedRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    setHeartIcon(favoritedRecipes
+      .some((recipe) => (recipe.id === id)) ? blackHeartIcon : whiteHeartIcon);
   }, []);
 
   useEffect(() => {
@@ -109,12 +138,24 @@ export default function RecipeInProgress(props) {
         </ul>
       )}
       <p data-testid="instructions">{ instructions }</p>
-      <button data-testid="share-btn">Compartilhar</button>
       <button
-        onClick={ () => history.push('/done-recipes') }
-        data-testid="favorite-btn"
+        data-testid="share-btn"
+        onClick={ () => {
+          setCopied('Link copied!');
+          copy(`http://localhost:3000/${pathname.includes('meals') ? 'meals' : 'drinks'}/${id}`);
+        } }
       >
-        Favoritar
+        <img src={ shareIcon } alt="" />
+      </button>
+      <button
+        data-testid="favorite-btn"
+        onClick={ () => favoriteRecipe() }
+        src={ heartIcon }
+      >
+        <img
+          src={ heartIcon }
+          alt=""
+        />
       </button>
       <Link to="/done-recipes">
         <button
@@ -124,6 +165,7 @@ export default function RecipeInProgress(props) {
           Finalizar
         </button>
       </Link>
+      <p>{copied}</p>
     </div>
   );
 }

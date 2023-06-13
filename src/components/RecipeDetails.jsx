@@ -23,6 +23,7 @@ export default function RecipeDetails(props) {
   const { pathname } = location;
   let inProgressRecipes = localStorage.getItem('inProgressRecipes')
     ? JSON.parse(localStorage.getItem('inProgressRecipes')) : [];
+  console.log(inProgressRecipes);
   const fetchRecipe = () => {
     const BASE_URL = pathname.includes('/meals') ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}` : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
     fetch(BASE_URL)
@@ -82,7 +83,13 @@ export default function RecipeDetails(props) {
         ? currentRecipe.strMealThumb : currentRecipe.strDrinkThumb,
     };
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteRecipes, obj]));
+    const isFavorite = favoriteRecipes.some((recipe) => (recipe.id === id));
+    if (isFavorite) {
+      const newFavorites = favoriteRecipes.filter((recipe) => recipe.id !== id);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+    } else {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteRecipes, obj]));
+    }
     const favoritedRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     setHeartIcon(favoritedRecipes
       .some((recipe) => (recipe.id === id)) ? blackHeartIcon : whiteHeartIcon);
