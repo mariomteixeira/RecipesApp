@@ -5,7 +5,7 @@ import '../styles/RecipeInProgress.css';
 
 export default function RecipeInProgress(props) {
   const history = useHistory();
-  const [finishedRecipe, setFinishedRecipe] = useState(false);
+  /* const [finishedRecipe, setFinishedRecipe] = useState(false); */
   const [currentRecipeInProgress, setCurrentRecipeInProgress] = useState(null);
   const [currentIngredientList, setCurrentIngredientList] = useState([]);
   const location = useLocation();
@@ -83,7 +83,7 @@ export default function RecipeInProgress(props) {
       </button>
       <Link to="/done-recipes">
         <button
-          disabled={ finishedRecipe }
+          /* disabled={ finishedRecipe } */
           data-testid="finish-recipe-btn"
         >
           Finalizar
