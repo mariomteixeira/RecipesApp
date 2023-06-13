@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-import renderWithRouter from '../helpers/renderWithRouter';
+import { renderWithRouter } from '../helpers/renderWithRouter';
 
 describe('Testando o componente <Footer.js />', () => {
   it('Teste se o componente contém o texto "Footer"', () => {
