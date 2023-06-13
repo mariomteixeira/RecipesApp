@@ -8,6 +8,7 @@ describe('Testando o componente <Header.js />', () => {
   const testEmail = 'teste@teste.com';
   it('Verifica se o componente está sendo renderizado na tela Profile', async () => {
     const { history } = renderWithRouter(<App />);
+    act(() => history.push('/'));
     const usernameField = screen.getByPlaceholderText('Username');
     const passwordField = screen.getByPlaceholderText('Password');
     const loginBtn = screen.getByRole('button', /entrar/i);
