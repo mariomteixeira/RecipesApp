@@ -15,7 +15,7 @@ export default function FavoriteRecipes() {
   const [data, setData] = useState([]);
 
   const getLocalStorage = () => {
-    const dataStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const dataStorage = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     return setData(dataStorage);
   };
 
