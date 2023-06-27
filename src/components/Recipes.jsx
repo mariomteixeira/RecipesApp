@@ -17,23 +17,28 @@ export default function Recipes() {
       .then((data) => setSearchResults(pathname === '/meals' ? data.meals : data.drinks));
   }, []);
   return (
-    <div className="recipe-list">
+    <div className="recipe-card-container">
       <Categories />
-      {searchResults?.length > 0 && searchResults.map((recipe, index) => (
-        <Link
-          key={ pathname === '/meals' ? recipe.idMeal : recipe.idDrink }
-          to={ pathname === '/meals'
-            ? `/meals/${recipe.idMeal}` : `/drinks/${recipe.idDrink}` }
-          name={ pathname === '/meals' ? recipe.strMeal : recipe.strDrink }
-        >
-          <RecipeCard
-            index={ index }
-            id={ pathname === '/meals' ? recipe.idMeal : recipe.idDrink }
-            name={ pathname === '/meals' ? recipe.strMeal : recipe.strDrink }
-            thumb={ pathname === '/meals' ? recipe.strMealThumb : recipe.strDrinkThumb }
-          />
-        </Link>
-      ))}
+      <div className="recipe-list">
+        {searchResults?.length > 0 && searchResults
+          .map((recipe, index) => index < Number('12') && (
+            <Link
+              className="recipe-card"
+              key={ pathname === '/meals' ? recipe.idMeal : recipe.idDrink }
+              to={ pathname === '/meals'
+                ? `/meals/${recipe.idMeal}` : `/drinks/${recipe.idDrink}` }
+              name={ pathname === '/meals' ? recipe.strMeal : recipe.strDrink }
+            >
+              <RecipeCard
+                index={ index }
+                id={ pathname === '/meals' ? recipe.idMeal : recipe.idDrink }
+                name={ pathname === '/meals' ? recipe.strMeal : recipe.strDrink }
+                thumb={ pathname === '/meals'
+                  ? recipe.strMealThumb : recipe.strDrinkThumb }
+              />
+            </Link>
+          ))}
+      </div>
     </div>
   );
 }

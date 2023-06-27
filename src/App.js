@@ -16,7 +16,6 @@ function App() {
   return (
     <RecipesProvider>
       <div className="app-container">
-        <h1 className="root">App de Receitas</h1>
         <div className="content">
           <Route exact path="/" component={ Login } />
           <Route exact path="/meals" component={ Meals } />
@@ -29,7 +28,6 @@ function App() {
           <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
           <Route exact path="/done-recipes" component={ DoneRecipes } />
         </div>
-        {/* Passar as páginas e os outros componentes somente acima desta div */}
       </div>
     </RecipesProvider>
   );

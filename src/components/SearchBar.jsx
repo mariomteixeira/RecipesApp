@@ -32,7 +32,7 @@ function SearchBar() {
           value="ingredient"
           onChange={ handleRadioChange }
         />
-        Ingrediente
+        Ingredient
       </label>
 
       <label htmlFor="name-search-radio">
@@ -65,7 +65,7 @@ function SearchBar() {
         data-testid="search-input"
         type="text"
         onChange={ handleSearchChange }
-        placeholder="Buscar Receita"
+        placeholder="Search Recipe"
       />
 
       <button
@@ -74,7 +74,7 @@ function SearchBar() {
         onClick={ () => HandleSearchClick(executeSearch, history) }
         type="button"
       >
-        Executar
+        Search
       </button>
     </form>
   );

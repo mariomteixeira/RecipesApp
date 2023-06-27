@@ -1,16 +1,27 @@
 footer {
   align-items: center;
-  background-color: #ccc;
+  background-color: #f8ede3;
   bottom: 0;
-  color: #464646;
+  color: #798777;
   display: flex;
   font-family: sans-serif;
+  font-size: 1.2em;
   justify-content: space-evenly;
-  position: fixed;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  position: sticky;
   width: 100%;
+}
+
+*:has( footer ) {
+  height: 100vh;
 }
 
 .footer-icons {
   display: flex;
   flex-direction: column;
+}
+
+.footer-icons a, .footer-icons img {
+  height: 55px;
 }

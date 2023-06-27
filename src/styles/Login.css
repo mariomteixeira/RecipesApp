@@ -1,0 +1,39 @@
+body {
+  background-color: #798777;
+}
+
+.login {
+  align-items: center;
+  color: #f8ede3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.login input {
+  border-radius: 0.6rem;
+  font-weight: 500;
+  margin: 0.3rem;
+  padding: 0.5rem 2rem;
+}
+
+div input::placeholder {
+  text-align: center;
+}
+
+div input:focus {
+  zoom: 105%;
+}
+
+.login-btn {
+  border-radius: 0.6rem;
+  font-weight: 600;
+  margin: 0.8rem;
+  padding: 0.5rem 2rem;
+}
+
+.login-btn:enabled {
+  background-color: #f8ede3;
+  border: 2px solid #798779;
+  color: #798777;
+}

@@ -1,12 +1,43 @@
-/* Foi culpa do Rayan */
+/* Jesus amado */
 .page-title {
-  color: #41197f;
+  align-items: center;
+  background-color: #f8ede3;
+  color: #798777;
   display: flex;
   font-family: Epilogue , sans-serif;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 900;
-  justify-content: center;
+  justify-content: space-around;
   line-height: 20px;
+  padding-block: 0.5rem;
+  width: 100%;
 }
 
+.page-title form {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.page-title form > button {
+  height: 1.8rem;
+}
+
+.page-title form > input[type="text"] {
+  border-radius: 8px;
+  height: 1.6em;
+  border: 1px solid #333;
+}
+
+.page-title button {
+  background: transparent;
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 3rem;
+  margin: 0.2rem;
+}
+
+.page-title-name {
+  color: #798777;
+  font-size: 1.3em;
+  font-style: normal;
+  font-weight: 900;
+}

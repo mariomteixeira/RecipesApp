@@ -1,8 +1,28 @@
+.recommended-recipes {
+  display: flex;
+  width: 80%;
+  margin: 1.4em auto;
+  overflow-x: auto;
+  gap: 5rem;
+  margin-bottom: 20px;
+  white-space: nowrap;
+}
+
 .recommended-recipe {
-  border: 1px solid black;
-  display: inline-flex;
+  background-color: #f8ede3;
+  border: 1px solid #333;
+  border-radius: 1rem;
+  color: #4a4d49;
+  font-weight: bold;
+  display: flex;
   flex-direction: column;
-  margin: 50px;
-  padding: 100px;
-  width: 5vh;
+  height: 15rem;
+  text-align: center;
+  width: 10rem;
+}
+
+.recommended-recipe img {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  height: 100%;
 }
