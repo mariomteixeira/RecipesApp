@@ -4,10 +4,10 @@ import Footer from '../components/Footer';
 
 export default function Meals() {
   return (
-    <div>
+    <>
       <Header />
       <Recipes />
       <Footer />
-    </div>
+    </>
   );
 }

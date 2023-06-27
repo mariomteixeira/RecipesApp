@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipesContext from '../context/RecipesContext';
-import '../App.css';
+import '../styles/Login.css';
 
 export default function Login() {
   const history = useHistory();
@@ -20,7 +20,8 @@ export default function Login() {
     history.push('/meals');
   };
   return (
-    <div>
+    <div className="login">
+      <h1>App de Receitas</h1>
       <label htmlFor="">
         <input
           data-testid="email-input"
@@ -40,6 +41,7 @@ export default function Login() {
         />
       </label>
       <button
+        className="login-btn"
         data-testid="login-submit-btn"
         disabled={ !enableBtn() }
         onClick={ () => handleClick() }

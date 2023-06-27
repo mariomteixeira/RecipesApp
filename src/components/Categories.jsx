@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
+import '../styles/Categories.css';
 
 function Categories() {
   const [categories, setCategories] = useState([]);
@@ -70,7 +71,7 @@ function Categories() {
   };
 
   return (
-    <div>
+    <div className="categories">
       <button
         type="button"
         value="all"

@@ -108,9 +108,9 @@ export default function RecipeDetails(props) {
   }, [currentRecipe]);
 
   return (
-    <>
+    <div className="recipe-details-container">
       {currentRecipe && pathname.includes('/drinks') ? (
-        <div>
+        <div className="recipe-details">
           <h1 data-testid="recipe-title">{currentRecipe?.strDrink}</h1>
           <p data-testid="recipe-category">{currentRecipe?.strAlcoholic}</p>
           <img
@@ -132,7 +132,7 @@ export default function RecipeDetails(props) {
           </ul>
         </div>
       ) : (
-        <div>
+        <div className="recipe-details">
           <h1 data-testid="recipe-title">{currentRecipe?.strMeal}</h1>
           <p data-testid="recipe-category">{currentRecipe?.strCategory}</p>
           <img
@@ -140,7 +140,9 @@ export default function RecipeDetails(props) {
             src={ currentRecipe?.strMealThumb }
             alt={ currentRecipe?.strMeal }
           />
+          <h3>Instructions</h3>
           <p data-testid="instructions">{currentRecipe?.strInstructions}</p>
+          <h3>Ingredients</h3>
           <ul>
             {currentIngredients?.map((ingredient, index) => (
               <li
@@ -167,6 +169,7 @@ export default function RecipeDetails(props) {
             allowFullScreen
             data-testid="video"
           />
+          <h3>Recommended recipes</h3>
         </div>
       )}
       <div className="recommended-recipes">
@@ -180,27 +183,29 @@ export default function RecipeDetails(props) {
               ? recommendedRecipe?.strDrinkThumb : recommendedRecipe?.strMealThumb }
           />
         ))}
+        <p>{copied}</p>
       </div>
-      <button
-        data-testid="share-btn"
-        onClick={ () => {
-          setCopied('Link copied!');
-          copy(`http://localhost:3000${pathname}`);
-        } }
-      >
-        <img src={ shareIcon } alt="" />
-      </button>
-      <button
-        data-testid="favorite-btn"
-        onClick={ () => favoriteRecipe() }
-        src={ heartIcon }
-      >
-        <img
+      <div className="recipe-details-btn">
+        <button
+          data-testid="share-btn"
+          onClick={ () => {
+            setCopied('Link copied!');
+            copy(`http://localhost:3000${pathname}`);
+          } }
+        >
+          <img src={ shareIcon } alt="" />
+        </button>
+        <button
+          data-testid="favorite-btn"
+          onClick={ () => favoriteRecipe() }
           src={ heartIcon }
-          alt=""
-        />
-      </button>
-      <p>{copied}</p>
+        >
+          <img
+            src={ heartIcon }
+            alt=""
+          />
+        </button>
+      </div>
       <Link
         to={ `${pathname}/in-progress` }
       >
@@ -210,11 +215,12 @@ export default function RecipeDetails(props) {
           onClick={ () => handleClick() }
           type="button"
         >
-          {inProgressRecipes
-            .some((recipe) => recipe.id === id) ? 'Continue Recipe' : 'Start Recipe'}
+          {/* {inProgressRecipes
+            .some((recipe) => recipe.id === id) ? 'Continue Recipe' : 'Start Recipe'} */}
+          Start Recipe
         </button>
       </Link>
-    </>
+    </div>
   );
 }
 

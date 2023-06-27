@@ -1,3 +1,53 @@
+.recipe-in-progress {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  text-align: center;
+  color: #4a4d49;
+  width: 80%;
+  margin: 3em auto;
+  background-color: #f8ede3;
+  border-radius: 10px;
+  padding-block: 0.8em;
+  font-size: 1.4em;
+}
+
+.recipe-in-progress img {
+  border-radius: 1rem;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.ingredient-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.recipe-in-progress ul {
+  list-style: none;
+  text-align: justify;
+  padding: 0;
+}
+
+.recipe-in-progress li {
+  margin: 0.5rem auto;
+  width: 60%;
+}
+
+.recipe-in-progress p {
+  padding-inline: 2rem;
+}
+
 .renatogaucho:has( input:checked ) {
   text-decoration: line-through solid black;
+}
+
+.recipe-in-progress-btn {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+}
+
+.recipe-in-progress-btn button {
+  padding: 0.5rem;
 }

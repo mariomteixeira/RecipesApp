@@ -107,65 +107,70 @@ export default function RecipeInProgress(props) {
   };
 
   return (
-    <div>
-      <p>In Progress</p>
-      <p data-testid="recipe-title">{ name }</p>
+    <div className="recipe-in-progress">
+      <h1 data-testid="recipe-title">{ name }</h1>
       <img data-testid="recipe-photo" src={ src } alt={ name } />
       <p data-testid="recipe-category">{ category }</p>
       <p>{ alcoholic }</p>
       {currentIngredientList && (
-        <ul>
-          {currentIngredientList?.map((ingredient, index) => (
-            <label
-              className="renatogaucho"
-              data-testid={ `${index}-ingredient-step` }
-              key={ index }
-              htmlFor=""
-            >
-              <li>
-                <input
-                  type="checkbox"
-                  checked={ checkboxes[index] || false }
-                  onChange={ (event) => {
-                    event.target.classList.add('crossed');
-                    handleCheckboxChange(index);
-                  } }
-                />
-                <span>{ingredient}</span>
-              </li>
-            </label>
-          ))}
-        </ul>
+        <div className="ingredient-container">
+          <h3>Ingredients</h3>
+          <ul>
+            {currentIngredientList?.map((ingredient, index) => (
+              <label
+                className="renatogaucho"
+                data-testid={ `${index}-ingredient-step` }
+                key={ index }
+                htmlFor=""
+              >
+                <li>
+                  <input
+                    type="checkbox"
+                    checked={ checkboxes[index] || false }
+                    onChange={ (event) => {
+                      event.target.classList.add('crossed');
+                      handleCheckboxChange(index);
+                    } }
+                  />
+                  <span>{ingredient}</span>
+                </li>
+              </label>
+            ))}
+          </ul>
+        </div>
       )}
+      <h3>Insctructions</h3>
       <p data-testid="instructions">{ instructions }</p>
-      <button
-        data-testid="share-btn"
-        onClick={ () => {
-          setCopied('Link copied!');
-          copy(`http://localhost:3000/${pathname.includes('meals') ? 'meals' : 'drinks'}/${id}`);
-        } }
-      >
-        <img src={ shareIcon } alt="" />
-      </button>
-      <button
-        data-testid="favorite-btn"
-        onClick={ () => favoriteRecipe() }
-        src={ heartIcon }
-      >
-        <img
-          src={ heartIcon }
-          alt=""
-        />
-      </button>
-      <Link to="/done-recipes">
-        <button
-          disabled={ !allChecked }
-          data-testid="finish-recipe-btn"
-        >
-          Finalizar
-        </button>
-      </Link>
       <p>{copied}</p>
+      <div className="recipe-in-progress-btn">
+        <button
+          data-testid="share-btn"
+          onClick={ () => {
+            setCopied('Link copied!');
+            copy(`http://localhost:3000/${pathname.includes('meals') ? 'meals' : 'drinks'}/${id}`);
+          } }
+        >
+          <img src={ shareIcon } alt="" />
+        </button>
+        <button
+          data-testid="favorite-btn"
+          onClick={ () => favoriteRecipe() }
+          src={ heartIcon }
+        >
+          <img
+            src={ heartIcon }
+            alt=""
+          />
+        </button>
+        <Link to="/done-recipes">
+          <button
+            disabled={ !allChecked }
+            data-testid="finish-recipe-btn"
+          >
+            Finalizar
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }

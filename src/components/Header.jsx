@@ -31,26 +31,28 @@ export default function Header() {
   };
 
   return (
-    <div className="header-container">
-      <button
-        src={ profileIcon }
-        data-testid="profile-top-btn"
-        onClick={ () => profileClick() }
-        className="profile-btn"
-      >
-        <img src={ profileIcon } alt="Ícone de perfil" />
-      </button>
-      {lSearch && (
+    <div className="page-title">
+      <div className='teste'>
         <button
-          src={ searchIcon }
-          data-testid="search-top-btn"
-          onClick={ () => searchClick() }
-          className="search-btn"
+          src={ profileIcon }
+          data-testid="profile-top-btn"
+          onClick={ () => profileClick() }
+          className="profile-btn"
         >
-          <img src={ searchIcon } alt="Ícone de pesquisa" />
-        </button>)}
+          <img src={ profileIcon } alt="Ícone de perfil" />
+        </button>
+        {lSearch && (
+          <button
+            src={ searchIcon }
+            data-testid="search-top-btn"
+            onClick={ () => searchClick() }
+            className="search-btn"
+          >
+            <img src={ searchIcon } alt="Ícone de pesquisa" />
+          </button>)}
+      </div>
       {clickedBar && <SearchBar />}
-      <p className="page-title" data-testid="page-title">
+      <p className="page-title-name" data-testid="page-title">
         {routeName[locPath]}
       </p>
     </div>
